@@ -6,24 +6,24 @@ namespace GoogleMapsDataAccess
 {
     public class LocationRepository
     {
-        private List<Location> listOfLocations;
+        public List<Location> ListOfLocations { get; private set; }
 
         public LocationRepository(List<Location> listOfLocations)
         {
-            this.listOfLocations = listOfLocations;
-        }
-
-        public List<Location> GetAllLocations()
-        {
-            return listOfLocations;
+            ListOfLocations = listOfLocations;
         }
 
         public Location GetLocation(string placeName, string country)
         {
-            return listOfLocations.
+            return ListOfLocations.
                 FirstOrDefault(l => l.PlaceName == placeName 
                                         && 
                                     l.Country == country);
+        }
+
+        public bool SaveLocation(Location location)
+        {
+            return true;
         }
     }
 }

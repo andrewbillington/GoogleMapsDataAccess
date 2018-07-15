@@ -13,7 +13,7 @@ namespace GoogleMapsDataAccessTests
     public class LocationRepositoryTests
     {
         [Test]
-        public void GivenRepositoryContainsOneLocationWithPlaceNameOfLeedsAndCountryOfUKAndLatitudeOf30AndLongitudeOf50_WhenGetAllLocationsCalled_OneLocationWithPlaceNameOfLeedsAndCountryOfUKAndLatitudeOf30AndLongitudeOf50IsReturned()
+        public void GivenRepositoryContainsOneLocationWithPlaceNameOfLeedsAndCountryOfUKAndLatitudeOf30AndLongitudeOf50_WhenListOfLocationsAccessed_OneLocationWithPlaceNameOfLeedsAndCountryOfUKAndLatitudeOf30AndLongitudeOf50IsReturned()
         {
             // Arrange
             var location = new Location()
@@ -33,7 +33,7 @@ namespace GoogleMapsDataAccessTests
             List<Location> actualLocations;
 
             // Act
-            actualLocations = locationRepository.GetAllLocations();
+            actualLocations = locationRepository.ListOfLocations;
 
             // Assert
             Assert.AreEqual(listOfLocations, actualLocations);
@@ -141,6 +141,35 @@ namespace GoogleMapsDataAccessTests
 
             // Assert
             Assert.IsNull(actualLocation);
+        }
+
+
+        [Test]
+        public void GivenLocationRepositoryDoesNotContainLocationWithPlaceNameOfDublineAndCountryOfIreland_WhenSaveLocationCalledWithPlaceNameOfDublinAndCountryOfIrelandAndLatitudeOfThirtyAndLongitudeOfFifty_StatusOfTrueIsReturned()
+        {
+            // Arrange
+
+            var placeNameOfLocationOnDatabase = "Dublin";
+            var countryOfLocationOnDatabase = "Ireland";
+            var latitude = 30.0f;
+            var longitude = 50.0f;
+            var location = new Location()
+            {
+                PlaceName = placeNameOfLocationOnDatabase,
+                Country = countryOfLocationOnDatabase,
+                Latitude = latitude,
+                Longitude = longitude
+            };
+
+            var locationRepository = new LocationRepository(new List<Location>());
+
+            bool returnedStatus;
+
+            // Act
+            returnedStatus = locationRepository.SaveLocation(location);
+
+            // Assert
+            Assert.AreEqual(true, returnedStatus);
         }
     }
 }
