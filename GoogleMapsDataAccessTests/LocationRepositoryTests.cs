@@ -143,9 +143,8 @@ namespace GoogleMapsDataAccessTests
             Assert.IsNull(actualLocation);
         }
 
-
         [Test]
-        public void GivenLocationRepositoryDoesNotContainLocationWithPlaceNameOfDublineAndCountryOfIreland_WhenSaveLocationCalledWithPlaceNameOfDublinAndCountryOfIrelandAndLatitudeOfThirtyAndLongitudeOfFifty_StatusOfTrueIsReturned()
+        public void GivenLocationRepositoryDoesNotContainLocationWithPlaceNameOfDublinAndCountryOfIreland_WhenSaveLocationCalledWithPlaceNameOfDublinAndCountryOfIrelandAndLatitudeOfThirtyAndLongitudeOfFifty_StatusOfTrueIsReturned()
         {
             // Arrange
 
@@ -170,6 +169,35 @@ namespace GoogleMapsDataAccessTests
 
             // Assert
             Assert.AreEqual(true, returnedStatus);
+        }
+
+        [Test]
+        public void GivenLocationRepositoryAlreadyContainsLocationWithPlaceNameOfDublinAndCountryOfIreland_WhenSaveLocationCalledWithPlaceNameOfDublinAndCountryOfIrelandAndLatitudeOfThirtyAndLongitudeOfFifty_StatusOfFalseIsReturned()
+        {
+            // Arrange
+
+            var placeName = "Dublin";
+            var country = "Ireland";
+            var latitude = 30.0f;
+            var longitude = 50.0f;
+            var location = new Location()
+            {
+                PlaceName = placeName,
+                Country = country,
+                Latitude = latitude,
+                Longitude = longitude
+            };
+
+            var locationRepository = 
+                    new LocationRepository(new List<Location>() { location });
+
+            bool returnedStatus;
+
+            // Act
+            returnedStatus = locationRepository.SaveLocation(location);
+
+            // Assert
+            Assert.AreEqual(false, returnedStatus);
         }
     }
 }

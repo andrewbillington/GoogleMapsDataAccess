@@ -23,6 +23,13 @@ namespace GoogleMapsDataAccess
 
         public bool SaveLocation(Location location)
         {
+            if (ListOfLocations.Exists(l => l.PlaceName == location.PlaceName
+                                                &&
+                                            l.Country == location.Country))
+            {
+                return false;
+            }
+
             return true;
         }
     }
